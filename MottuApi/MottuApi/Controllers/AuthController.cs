@@ -17,11 +17,20 @@ namespace MottuApi.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDto user)
+        public async Task<ActionResult<string>> Register(UserDto user)
         {
-            ArgumentNullException.ThrowIfNull(user);
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            return Ok();
+            try
+            {
+                ArgumentNullException.ThrowIfNull(user);
+                if (_authBusiness.Register(user))
+                    return Ok("User created with success.");
+                else return BadRequest();
+            } 
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
         [HttpPost("login")]
         public async Task<ActionResult<String>> Login(UserDto user)

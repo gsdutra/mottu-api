@@ -21,5 +21,7 @@ namespace MottuApi.Repository
         }
 
         public DbSet<Motorcycle> Motorcycles { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Session> Sessions { get; set; }
     }
 }

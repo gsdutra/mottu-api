@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MottuApi.Model
 {
-    public class User
+    public class Session
     {
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public Boolean IsAdmin { get; set; }
+        public int UserId { get; set; }
+        public string? Bearer {  get; set; }
+        public DateTime? ExpiresAt { get; set; }
     }
 }
