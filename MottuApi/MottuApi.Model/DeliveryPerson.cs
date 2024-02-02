@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace MottuApi.Model
 {
-    public class Session
+    public enum CnhType
+    {
+        A = 0, B = 1, A_B = 2
+    }
+    public class DeliveryPerson
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,7 +20,10 @@ namespace MottuApi.Model
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
-        public string? Bearer {  get; set; }
-        public DateTime? ExpiresAt { get; set; }
+        public string Name { get; set; }
+        public string Cnpj {  get; set; }
+        public string Cnh { get; set; }
+        public string CnhImage { get; set; }
+        public CnhType CnhType { get; set; }
     }
 }

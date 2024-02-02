@@ -8,16 +8,19 @@ using System.Threading.Tasks;
 
 namespace MottuApi.Model
 {
-    public class User
+    public enum Situation
+    {
+        Available = 0, Accepted = 1, Delivered = 2
+    }
+    public class Order
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public Boolean IsAdmin { get; set; }
-        public Session Session { get; set; }
-        public DeliveryPerson DeliveryPerson { get; set; }
-        public Rental Rental { get; set; }
+        public DateTime OrderedAt {  get; set; }
+        public int Price {  get; set; }
+        public Situation Situation { get; set; }
+        public string AddresOrigin { get; set; }
+        public string AddresDestination { get; set;}
     }
 }

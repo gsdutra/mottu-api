@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MottuApi.Model
 {
-    public class Session
+    public class Rental
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,7 +16,10 @@ namespace MottuApi.Model
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
-        public string? Bearer {  get; set; }
-        public DateTime? ExpiresAt { get; set; }
+        public int MotorcycleId { get; set; }
+        public Motorcycle Motorcycle { get; set; }
+        public DateTime StartDate {  get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime ExpectedEndDate {  get; set; }
     }
 }

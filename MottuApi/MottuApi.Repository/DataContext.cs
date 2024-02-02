@@ -1,5 +1,6 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic;
 using MottuApi.Model;
 
 namespace MottuApi.Repository
@@ -23,5 +24,19 @@ namespace MottuApi.Repository
         public DbSet<Motorcycle> Motorcycles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<MotorcycleModel> MotorcycleModels { get; set;}
+        public DbSet<Rental> Rentals { get; set;}
+        public DbSet<RentalPlan> RentalsPlan { get; set;}
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<DeliveryPerson> DeliveryPeople { get; set; }
+
+        public User[] admins = new User[]
+        {
+            new User { Id = -100, Email = "admin@admin.com", Password="$2a$11$uLXF/MIWB7sFfvip5vhbWuAvn3fDFGrI7W8utMSefn2MIeToHHVGm", IsAdmin = true }
+        };
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasData(admins);
+        }
     }
 }
