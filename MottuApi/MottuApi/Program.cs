@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using MottuApi;
 using MottuApi.Business;
+using MottuApi.Middlewares;
 using MottuApi.Model;
 using MottuApi.Repository;
 
@@ -32,15 +33,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.Use((context, next) =>
-{
-    // Non authenticated routes
-    if (!context.Request.Path.StartsWithSegments("/api/auth"))
-        context.Response.WriteAsync("Hello from inline middleware!");
-
-    return next(context);
-});
 
 app.UseHttpsRedirection();
 

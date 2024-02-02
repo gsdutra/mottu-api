@@ -20,10 +20,29 @@ namespace MottuApi.Repository
             _dataContext.Users.Add(user);
             _dataContext.SaveChanges();
         }
-        public bool verifyIfEmailExists(string email)
+        public User getUser(string email)
         {
             User user = _dataContext.Users.FirstOrDefault(x => x.Email == email);
-            return user != null;
+            return user;
+        }
+        public void createSession(int userId, string bearerToken)
+        {
+            if (_dataContext.Sessions.FirstOrDefault(x => x.UserId == userId) == null)
+            {
+                _dataContext.Sessions.Add(new Session { UserId = userId });
+                _dataContext.SaveChanges();
+            }
+            Session session = _dataContext.Sessions.FirstOrDefault(s => s.UserId == userId);
+            session.Bearer = bearerToken;
+            session.ExpiresAt = DateTime.UtcNow.AddHours(8);
+            _dataContext.SaveChanges();
+        }
+        public User getUserByBearerSession(string bearerToken)
+        {
+            Session session = _dataContext.Sessions.FirstOrDefault(x => x.Bearer == bearerToken);
+            User userData = _dataContext.Users.Find(session.UserId);
+
+            return userData;
         }
     }
 }

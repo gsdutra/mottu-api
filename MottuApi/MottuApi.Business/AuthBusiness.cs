@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace MottuApi.Business
 {
@@ -31,7 +32,7 @@ namespace MottuApi.Business
                     Email = user.Email,
                     Password = BCrypt.Net.BCrypt.HashPassword(user.Password),
                 };
-                if (_authRepository.verifyIfEmailExists(user.Email))
+                if (_authRepository.getUser(user.Email) != null)
                     throw new Exception("Email already registered.");
                 _authRepository.insertUser(newUser);
                 return true;
@@ -43,7 +44,30 @@ namespace MottuApi.Business
         {
             try
             {
-                return "";
+                User userData = _authRepository.getUser(user.Email);
+                if (userData == null)
+                    throw new Exception("User does not exist");
+                if (!BCrypt.Net.BCrypt.Verify(user.Password, userData.Password))
+                    throw new Exception("Incorrect password");
+                string bearerToken = Guid.NewGuid().ToString();
+                _authRepository.createSession(userData.Id, bearerToken);
+                return bearerToken;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public User Authenticate(string header)
+        {
+            try
+            {
+                if (header == null)
+                    throw new Exception("Missing bearer token.");
+                string bearer = header.Split(" ")[1];
+                User user = _authRepository.getUserByBearerSession(bearer);
+                return user == null ? throw new Exception("Could not authenticate.") : user;
             }
             catch (Exception ex)
             {

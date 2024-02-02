@@ -8,18 +8,20 @@ namespace MottuApi.Controllers
 {   
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class MotorcycleController : ControllerBase
     {
         private readonly MotorcycleBusiness _motorcycleBusiness;
-        public MotorcycleController(MotorcycleBusiness motorcycleBusiness)
+        private readonly AuthBusiness _authBusiness;
+        public MotorcycleController(MotorcycleBusiness motorcycleBusiness, AuthBusiness authBusiness)
         {
             _motorcycleBusiness = motorcycleBusiness;
+            _authBusiness = authBusiness;
         }
 
         [HttpGet]
         public async Task<ActionResult<Motorcycle>> GetSingleMotorcycle()
         {
+            User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
             return Ok(_motorcycleBusiness.GetSingleMotorcyle("test"));
         }
     }
