@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace MottuApi.Model
 {
-    public class MotorcycleDto
+    public class MotorcycleModelDto
     {
-        public int Year { get; set; }
-        public int ModelId { get; set; }
-        public string Plate {  get; set; }
-
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

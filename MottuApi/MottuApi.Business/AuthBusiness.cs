@@ -71,7 +71,7 @@ namespace MottuApi.Business
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new UnauthorizedAccessException(ex.Message);
             }
         }
 

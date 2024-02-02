@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 using MottuApi;
 using MottuApi.Business;
 using MottuApi.Middlewares;

@@ -18,11 +18,56 @@ namespace MottuApi.Controllers
             _authBusiness = authBusiness;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Motorcycle>> GetSingleMotorcycle()
+        [HttpGet("{plate}")]
+        public async Task<ActionResult<Motorcycle>> GetSingleMotorcycle(string plate)
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
-            return Ok(_motorcycleBusiness.GetSingleMotorcyle("test"));
+            if (!userData.IsAdmin) return Unauthorized();
+            return Ok(_motorcycleBusiness.GetSingleMotorcyle(plate));
+        }
+        [HttpGet]
+        public async Task<ActionResult<List<Motorcycle>>> GetAllMotorCycles()
+        {
+            User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
+            if (!userData.IsAdmin) return Unauthorized();
+            return Ok(_motorcycleBusiness.GetMotorcycles());
+        }
+        [HttpPost]
+        public async Task<ActionResult<bool>> CreateMotorcycle(MotorcycleDto motorcycle)
+        {
+            User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
+            if (!userData.IsAdmin) return Unauthorized();
+            int newMotorcycleId = _motorcycleBusiness.CreateMotorcycle(motorcycle);
+            return StatusCode(201, newMotorcycleId);
+        }
+        [HttpPut]
+        public async Task<ActionResult<Motorcycle>> UpdateMotorcyclePlate(int id, string plate)
+        {
+            User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
+            if (!userData.IsAdmin) return Unauthorized();
+            return Ok(_motorcycleBusiness.UpdateMotorcycle(id, plate));
+        }
+        [HttpDelete]
+        public async Task<ActionResult<bool>> DeleteMotorcycle(int id)
+        {
+            User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
+            if (!userData.IsAdmin) return Unauthorized();
+            return Ok(_motorcycleBusiness.DeleteMotorcycle(id));
+        }
+        [HttpGet("model")]
+        public async Task<ActionResult<List<MotorcycleModel>>> GetModels()
+        {
+            User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
+            if (!userData.IsAdmin) return Unauthorized();
+            return Ok(_motorcycleBusiness.GetAllModels());
+        }
+        [HttpPost("model")]
+        public async Task<ActionResult<Motorcycle>> CreateModel(MotorcycleModelDto model)
+        {
+            User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
+            if (!userData.IsAdmin) return Unauthorized();
+            _motorcycleBusiness.CreateModel(model);
+            return StatusCode(201);
         }
     }
 }

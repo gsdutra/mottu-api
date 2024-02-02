@@ -39,8 +39,10 @@ namespace MottuApi.Repository
         }
         public User getUserByBearerSession(string bearerToken)
         {
+            User userData = new User();
             Session session = _dataContext.Sessions.FirstOrDefault(x => x.Bearer == bearerToken);
-            User userData = _dataContext.Users.Find(session.UserId);
+            if (session != null)
+                userData = _dataContext.Users.Find(session.UserId);
 
             return userData;
         }
