@@ -22,7 +22,7 @@ namespace MottuApi.Repository
         }
         public DeliveryPerson VerifyIfDataExists(DeliveryPerson deliveryPerson)
         {
-            DeliveryPerson ret = _dataContext.DeliveryPeople.FirstOrDefault(deliveryPerson.UserId);
+            DeliveryPerson ret = _dataContext.DeliveryPeople.FirstOrDefault(x => x.UserId == deliveryPerson.UserId);
             return ret;
         }
     }

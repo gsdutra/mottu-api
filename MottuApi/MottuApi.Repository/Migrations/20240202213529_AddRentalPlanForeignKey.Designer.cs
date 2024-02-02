@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MottuApi.Repository;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MottuApi.Repository.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240202213529_AddRentalPlanForeignKey")]
+    partial class AddRentalPlanForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,32 +199,6 @@ namespace MottuApi.Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RentalsPlan");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DailyFinePercentage = 20,
-                            DailyPrice = 3000,
-                            Days = 7,
-                            ExtraDayPrice = 5000
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DailyFinePercentage = 40,
-                            DailyPrice = 2800,
-                            Days = 15,
-                            ExtraDayPrice = 5000
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DailyFinePercentage = 60,
-                            DailyPrice = 2200,
-                            Days = 30,
-                            ExtraDayPrice = 5000
-                        });
                 });
 
             modelBuilder.Entity("MottuApi.Model.Session", b =>

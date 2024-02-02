@@ -43,6 +43,7 @@ namespace MottuApi.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(admins);
+            modelBuilder.Entity<RentalPlan>().HasData(reantalPlans);
         }
     }
 }

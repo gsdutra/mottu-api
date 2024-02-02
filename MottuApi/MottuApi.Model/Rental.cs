@@ -17,7 +17,11 @@ namespace MottuApi.Model
         [ForeignKey("UserId")]
         public User User { get; set; }
         public int MotorcycleId { get; set; }
+        [ForeignKey("MotorcycleId")]
         public Motorcycle Motorcycle { get; set; }
+        public int RentalPlanId { get; set; }
+        [ForeignKey("RentalPlanId")]
+        public RentalPlan RentalPlan { get; set; }
         public DateTime StartDate {  get; set; }
         public DateTime EndDate { get; set; }
         public DateTime ExpectedEndDate {  get; set; }

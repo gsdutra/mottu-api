@@ -17,5 +17,6 @@ namespace MottuApi.Model
         public int DailyPrice {  get; set; }
         public int DailyFinePercentage {  get; set; }
         public int ExtraDayPrice { get; set; }
+        public Rental? Rental { get; set; }
     }
 }

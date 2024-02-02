@@ -22,9 +22,10 @@ builder.Services.AddScoped<MotorcycleBusiness>();
 builder.Services.AddScoped<MotorcycleRepository>();
 builder.Services.AddScoped<AuthBusiness>();
 builder.Services.AddScoped<AuthRepository>();
-//builder.Services.AddScoped<>();
-//builder.Services.AddScoped<>();
-//builder.Services.AddScoped<>();
+builder.Services.AddScoped<DeliveryPersonBusiness>();
+builder.Services.AddScoped<DeliveryPersonRepository>();
+builder.Services.AddScoped<RentalBusiness>();
+builder.Services.AddScoped<RentalRepository>();
 
 var app = builder.Build();
 
