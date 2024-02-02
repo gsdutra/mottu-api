@@ -34,6 +34,12 @@ namespace MottuApi.Repository
         {
             new User { Id = -100, Email = "admin@admin.com", Password="$2a$11$uLXF/MIWB7sFfvip5vhbWuAvn3fDFGrI7W8utMSefn2MIeToHHVGm", IsAdmin = true }
         };
+        public RentalPlan[] reantalPlans = new RentalPlan[]
+        {
+            new RentalPlan { Id = 1, Days = 7, DailyPrice = 3000, DailyFinePercentage = 20, ExtraDayPrice = 5000},
+            new RentalPlan { Id = 2, Days = 15, DailyPrice = 2800, DailyFinePercentage = 40, ExtraDayPrice = 5000},
+            new RentalPlan { Id = 3, Days = 30, DailyPrice = 2200, DailyFinePercentage = 60, ExtraDayPrice = 5000}
+        };
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(admins);
