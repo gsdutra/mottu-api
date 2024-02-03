@@ -17,13 +17,19 @@ namespace MottuApi.Controllers
             _authBusiness = authBusiness;
         }
         [HttpPost]
-        public async Task<ActionResult<bool>> AddDeliveryPersonData(DeliveryPerson deliveryPeron)
+        public async Task<ActionResult<bool>> AddDeliveryPersonData(DeliveryPersonDto deliveryPeron)
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
-            if (!userData.IsAdmin) return Unauthorized();
-            if (deliveryPeron.UserId != userData.Id) return Unauthorized();
-            _deliveryPersonBusiness.AddData(deliveryPeron);
-            return StatusCode(201, "Added data");
+            try
+            {
+                _deliveryPersonBusiness.AddData(deliveryPeron, userData.Id);
+                return StatusCode(201, "Added data");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }
