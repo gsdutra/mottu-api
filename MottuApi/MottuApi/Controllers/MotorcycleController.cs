@@ -23,51 +23,100 @@ namespace MottuApi.Controllers
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
             if (!userData.IsAdmin) return Unauthorized();
-            return Ok(_motorcycleBusiness.GetSingleMotorcyle(plate));
+            try
+            {
+                return Ok(_motorcycleBusiness.GetSingleMotorcyle(plate));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet]
         public async Task<ActionResult<List<Motorcycle>>> GetAllMotorCycles()
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
             if (!userData.IsAdmin) return Unauthorized();
-            return Ok(_motorcycleBusiness.GetMotorcycles());
+            try
+            {
+                return Ok(_motorcycleBusiness.GetMotorcycles());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPost]
         public async Task<ActionResult<bool>> CreateMotorcycle(MotorcycleDto motorcycle)
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
             if (!userData.IsAdmin) return Unauthorized();
-            int newMotorcycleId = _motorcycleBusiness.CreateMotorcycle(motorcycle);
-            return StatusCode(201, newMotorcycleId);
+            try
+            {
+                int newMotorcycleId = _motorcycleBusiness.CreateMotorcycle(motorcycle);
+                return StatusCode(201, newMotorcycleId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut]
         public async Task<ActionResult<Motorcycle>> UpdateMotorcyclePlate(int id, string plate)
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
             if (!userData.IsAdmin) return Unauthorized();
-            return Ok(_motorcycleBusiness.UpdateMotorcycle(id, plate));
+            try
+            {
+                return Ok(_motorcycleBusiness.UpdateMotorcycle(id, plate));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete]
         public async Task<ActionResult<bool>> DeleteMotorcycle(int id)
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
             if (!userData.IsAdmin) return Unauthorized();
-            return Ok(_motorcycleBusiness.DeleteMotorcycle(id));
+            try
+            {
+                return Ok(_motorcycleBusiness.DeleteMotorcycle(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("model")]
         public async Task<ActionResult<List<MotorcycleModel>>> GetModels()
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
             if (!userData.IsAdmin) return Unauthorized();
-            return Ok(_motorcycleBusiness.GetAllModels());
+            try
+            {
+                return Ok(_motorcycleBusiness.GetAllModels());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPost("model")]
         public async Task<ActionResult<Motorcycle>> CreateModel(MotorcycleModelDto model)
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
             if (!userData.IsAdmin) return Unauthorized();
-            _motorcycleBusiness.CreateModel(model);
-            return StatusCode(201);
+            try
+            {
+                _motorcycleBusiness.CreateModel(model);
+                return StatusCode(201);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

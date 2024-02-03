@@ -21,13 +21,27 @@ namespace MottuApi.Controllers
         public async Task<ActionResult<List<Motorcycle>>> GetAllPlans()
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
-            return Ok(_rentalBusiness.ConsultPlans());
+            try
+            {
+                return Ok(_rentalBusiness.ConsultPlans());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPost("simulate")]
         public async Task<ActionResult<List<Motorcycle>>> Simulate(RentalDto rental)
         {
             User userData = _authBusiness.Authenticate(HttpContext.Request.Headers["Authorization"]);
-            return Ok(_rentalBusiness.GetSimulationValue(rental));
+            try
+            {
+                return Ok(_rentalBusiness.GetSimulationValue(rental));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

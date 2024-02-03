@@ -35,8 +35,15 @@ namespace MottuApi.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<String>> Login(UserDto user)
         {
-            string token = _authBusiness.Login(user);
-            return Ok(token);
+            try
+            {
+                string token = _authBusiness.Login(user);
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
